@@ -221,7 +221,7 @@ void set_pullupdn(int gpio, int pud)//void sunxi_pullUpDnControl (int pin, int p
 	 int index = gpio - (bank << 5);
 	 int sub = index >> 4;
 	 int sub_index = index - 16*sub;
-	 uint32_t phyaddr = SUNXI_GPIO_BASE + (bank * 36) + 0x1c + sub; // +0x10 -> pullUpDn reg
+	 uint32_t phyaddr = SUNXI_GPIO_BASE + (bank * 36) + 0x1c + sub * 4; // +0x10 -> pullUpDn reg
 	 
 	if (lemakerDebug)
 		printf("func:%s pin:%d,bank:%d index:%d sub:%d phyaddr:0x%x\n",__func__, gpio,bank,index,sub,phyaddr); 
@@ -278,7 +278,8 @@ void setup_gpio(int gpio, int direction, int pud)//void sunxi_set_gpio_mode(int 
 	}
 	else
 	{
-		printf("line:%dpin number error\n",__LINE__);
+        if (lemakerDebug)
+            printf("line:%dpin number error\n",__LINE__);
 	} 
 }
 
